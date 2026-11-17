@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="th">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PhysicsLab: Forces, Laws of Motion & Equilibrium</title>
-<meta name="description" content="Interactive physics simulations and a randomized pre-test on Forces, Newton's Laws of Motion and Mechanical Equilibrium.">
+<title>ห้องทดลองฟิสิกส์ ม.4: แรงและกฎการเคลื่อนที่ · สมดุลกล</title>
+<meta name="description" content="การจำลองฟิสิกส์ ม.4 เรื่องแรงและกฎการเคลื่อนที่ สมดุลกล พร้อมแบบทดสอบก่อนเรียนแบบสุ่มโจทย์">
 <style>
 :root{
   --bg:#f6f7fb; --card:#ffffff; --ink:#1b2236; --muted:#5b6478; --line:#e1e5ef;
@@ -22,31 +22,28 @@
   }
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{padding:28px 20px 8px;max-width:1100px;margin:auto}
-header h1{margin:0;font-size:clamp(1.6rem,4vw,2.3rem);letter-spacing:-.02em}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Sarabun","Noto Sans Thai",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif}
+header{padding:26px 20px 6px;max-width:1100px;margin:auto}
+header h1{margin:0;font-size:clamp(1.5rem,4vw,2.2rem);letter-spacing:-.01em}
 header p{margin:.3rem 0 0;color:var(--muted)}
 #tabs{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);
   display:flex;gap:6px;padding:10px 20px;max-width:1100px;margin:auto;overflow-x:auto}
-#tabs button,.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;border-radius:999px;
+#tabs button,.pill{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 16px;border-radius:999px;
   font:600 .95rem inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
 #tabs button[aria-selected="true"],.pill[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 main{max-width:1100px;margin:auto;padding:8px 20px 60px}
 .panel[hidden]{display:none}
-.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
-.card h3{margin:.1rem 0 .5rem;font-size:1.1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px}
+.card h3{margin:.1rem 0 .5rem;font-size:1.05rem}
 .card p{margin:.4rem 0}
-.formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--bg);border:1px solid var(--line);
-  border-radius:10px;padding:8px 12px;margin:8px 0;font-size:.95rem;overflow-x:auto}
+.formula{font-family:ui-monospace,SFMono-Regular,Menlo,Tahoma,monospace;background:var(--bg);border:1px solid var(--line);
+  border-radius:10px;padding:6px 12px;margin:6px 0;font-size:.95rem;overflow-x:auto}
 .muted{color:var(--muted)}
-ol.steps{padding-left:1.2rem;margin:.4rem 0}
-.cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:0;background:var(--accent);color:var(--accent-ink);padding:10px 18px;border-radius:10px;font:600 .95rem inherit;font-family:inherit;cursor:pointer}
+.btn{border:0;background:var(--accent);color:var(--accent-ink);padding:9px 18px;border-radius:10px;font:600 .95rem inherit;font-family:inherit;cursor:pointer}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.picker{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.picker{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}
 .sim h3{margin:.2rem 0}
-.sim-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;align-items:start}
+.sim-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:14px;align-items:start}
 @media(max-width:860px){.sim-grid{grid-template-columns:1fr}}
 canvas{width:100%;height:auto;background:var(--cv);border:1px solid var(--line);border-radius:var(--radius);display:block}
 .side{display:grid;gap:12px}
@@ -57,125 +54,75 @@ canvas{width:100%;height:auto;background:var(--cv);border:1px solid var(--line);
 .readout{margin:0;border:1px solid var(--line);border-radius:12px;background:var(--card);padding:6px 12px}
 .readout div{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line);font-size:.9rem}
 .readout div:last-child{border:0}
-.readout dt{color:var(--muted)} .readout dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums}
-.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-top:8px}
+.readout dt{color:var(--muted)} .readout dd{margin:0;font-weight:700;font-variant-numeric:tabular-nums;text-align:right}
+.below{margin-top:14px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted);margin-top:12px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
-/* pre-test */
 .q{margin-bottom:14px}
-.q .tag{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:700}
+.q .tag{font-size:.78rem;color:var(--accent);font-weight:700}
 .q .num{font-weight:800;margin-right:6px}
-.answers{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 4px}
+.answers{display:flex;gap:14px;flex-wrap:wrap;margin:12px 0 4px}
 .answers label{display:flex;align-items:center;gap:8px;font-weight:600}
 .answers input{width:110px;padding:8px 10px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);font:inherit}
 .answers input.good{border-color:var(--good)} .answers input.bad{border-color:var(--bad)}
 .hint{font-size:.9rem;color:var(--muted)}
 .sol{margin-top:10px;padding:10px 14px;border-left:4px solid var(--accent);background:var(--bg);border-radius:8px;font-size:.93rem}
 .sol p{margin:.3rem 0}
-#score{font-size:1.1rem;font-weight:700}
+#score{font-size:1.05rem;font-weight:700}
 footer{max-width:1100px;margin:auto;padding:0 20px 40px;color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
 <header>
-  <h1>⚛️ PhysicsLab</h1>
-  <p>Forces &amp; Laws of Motion · Mechanical Equilibrium: learn, experiment, then test yourself.</p>
+  <h1>⚛️ ห้องทดลองฟิสิกส์ ม.4</h1>
+  <p>แรงและกฎการเคลื่อนที่ · สมดุลกล: ลองปรับค่าแล้วดูแผนภาพแรงเปลี่ยนไปแบบทันที (กำหนด g = 10 m/s²)</p>
 </header>
 <nav id="tabs" role="tablist">
-  <button data-tab="learn" aria-selected="true">📘 Learn</button>
-  <button data-tab="sims" aria-selected="false">🧪 Simulations</button>
-  <button data-tab="pretest" aria-selected="false">📝 Pre-test</button>
+  <button data-tab="sims" aria-selected="true">🧪 จำลองการทดลอง</button>
+  <button data-tab="pretest" aria-selected="false">📝 แบบทดสอบก่อนเรียน</button>
 </nav>
 
 <main>
-<!-- ============ LEARN ============ -->
-<section id="learn" class="panel">
-  <div class="grid">
-    <div class="card"><h3>Newton's Three Laws</h3>
-      <p><b>1st (inertia):</b> an object keeps its state of motion unless a net force acts on it.</p>
-      <p><b>2nd:</b> the net force equals mass times acceleration.</p>
-      <div class="formula">ΣF = m·a</div>
-      <p><b>3rd:</b> forces come in pairs: if A pushes B with F, B pushes A with −F.</p>
-    </div>
-    <div class="card"><h3>Common forces</h3>
-      <div class="formula">Weight W = m·g  (g = 9.8 m/s²)</div>
-      <div class="formula">Kinetic friction f<sub>k</sub> = μ<sub>k</sub>·N</div>
-      <div class="formula">Static friction f<sub>s</sub> ≤ μ<sub>s</sub>·N</div>
-      <p><b>Normal force N</b> is perpendicular to the surface. <b>Tension T</b> pulls along a rope. Neither is automatically equal to mg, so always check with ΣF.</p>
-    </div>
-    <div class="card"><h3>Inclined plane</h3>
-      <p>Tilt your axes: x along the slope, y perpendicular to it.</p>
-      <div class="formula">W∥ = mg sinθ   W⊥ = mg cosθ<br>N = mg cosθ</div>
-      <div class="formula">a = g(sinθ − μ cosθ)  (sliding down)</div>
-      <p>It slides only if tanθ &gt; μ<sub>s</sub>.</p>
-    </div>
-    <div class="card"><h3>Mechanical equilibrium</h3>
-      <p>An object is in equilibrium when it has no linear <i>and</i> no angular acceleration.</p>
-      <div class="formula">ΣFx = 0   ΣFy = 0   Στ = 0</div>
-      <div class="formula">Torque τ = F · d⊥ (force × perpendicular lever arm)</div>
-      <p><b>Static</b> equilibrium: at rest. <b>Dynamic</b> equilibrium: constant velocity.</p>
-    </div>
-    <div class="card"><h3>Cables at angles</h3>
-      <p>A sign hangs from two cables at angles α and β above the horizontal:</p>
-      <div class="formula">T₁cosα = T₂cosβ<br>T₁sinα + T₂sinβ = W</div>
-      <div class="formula">T₁ = W cosβ / sin(α+β)<br>T₂ = W cosα / sin(α+β)</div>
-    </div>
-    <div class="card"><h3>Problem-solving recipe</h3>
-      <ol class="steps">
-        <li>Sketch the situation; pick the object(s).</li>
-        <li>Draw a <b>free-body diagram</b>: every force on the object.</li>
-        <li>Choose axes (tilt them for slopes).</li>
-        <li>Write ΣFx and ΣFy (and Στ for rotation).</li>
-        <li>Solve, then sanity-check units and signs.</li>
-      </ol>
-    </div>
-  </div>
-  <div class="cta">
-    <button class="btn" data-go="sims">Open simulations →</button>
-    <button class="btn ghost" data-go="pretest">Take the pre-test</button>
-  </div>
-</section>
-
-<!-- ============ SIMS ============ -->
-<section id="sims" class="panel" hidden>
+<section id="sims" class="panel">
   <div class="picker" id="picker"></div>
   <div id="simhost"></div>
   <div class="legend">
-    <span><i style="background:var(--c-weight)"></i>Weight W</span>
-    <span><i style="background:var(--c-normal)"></i>Normal N</span>
-    <span><i style="background:var(--c-friction)"></i>Friction f</span>
-    <span><i style="background:var(--c-applied)"></i>Applied F</span>
-    <span><i style="background:var(--c-tension)"></i>Tension T</span>
+    <span><i style="background:var(--c-weight)"></i>น้ำหนัก W = mg</span>
+    <span><i style="background:var(--c-normal)"></i>แรงปฏิกิริยาตั้งฉาก N</span>
+    <span><i style="background:var(--c-friction)"></i>แรงเสียดทาน f</span>
+    <span><i style="background:var(--c-applied)"></i>แรงดึง/ผลัก F</span>
+    <span><i style="background:var(--c-tension)"></i>แรงตึงเชือก T</span>
   </div>
 </section>
 
-<!-- ============ PRETEST ============ -->
 <section id="pretest" class="panel" hidden>
   <div class="card" style="margin-bottom:14px">
-    <h3>Pre-test: Find F, N, T, a …</h3>
-    <p class="muted">10 randomly generated problems; the numbers change each attempt. Use g = 9.8 m/s². Answers within 2% are accepted. Draw a free-body diagram first!</p>
-    <div class="cta" style="margin-top:8px">
-      <button class="btn" id="btn-check">Check answers</button>
-      <button class="btn ghost" id="btn-new">New test</button>
+    <h3>แบบทดสอบก่อนเรียน: จงหา F, N, T, a …</h3>
+    <p class="muted">10 ข้อ สุ่มโจทย์และตัวเลขใหม่ทุกครั้ง ใช้ g = 10 m/s² (sin37° = 0.6, cos37° = 0.8, sin53° = 0.8, cos53° = 0.6) ตอบคลาดเคลื่อนได้ไม่เกิน 2% ควรวาดแผนภาพแรงก่อนทุกข้อ</p>
+    <div class="btns" style="margin-top:8px;align-items:center">
+      <button class="btn" id="btn-check">ตรวจคำตอบ</button>
+      <button class="btn ghost" id="btn-new">ชุดใหม่</button>
       <span id="score"></span>
     </div>
   </div>
   <div id="qlist"></div>
 </section>
 </main>
-<footer>Built for GitHub Pages. Static HTML, no tracking, no dependencies.</footer>
+<footer>เว็บนี้เป็น HTML ไฟล์เดียว ไม่ใช้ไลบรารีภายนอก และใช้งานบน GitHub Pages ได้ทันที</footer>
 
 <script>
 (() => {
 'use strict';
-const G = 9.8;
+const G = 10; // ค่า g ที่ใช้ทั้งเว็บ (m/s²)
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const rad = d => d * Math.PI / 180;
-const S = d => Math.sin(rad(d)), C = d => Math.cos(rad(d)), T = d => Math.tan(rad(d));
+const S = d => Math.sin(rad(d)), C = d => Math.cos(rad(d)), TAN = d => Math.tan(rad(d));
 const fmt = (x, n = 2) => Number(x).toFixed(n);
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
 const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
 const pick = a => a[Math.floor(Math.random() * a.length)];
+const FONT = '"Sarabun","Noto Sans Thai",system-ui,Tahoma,sans-serif';
 
 /* ------------------------------ tabs ------------------------------ */
 let active = null, currentSim = null;
@@ -187,7 +134,6 @@ function showTab(t) {
   window.scrollTo({ top: 0 });
 }
 $$('#tabs button').forEach(b => b.onclick = () => showTab(b.dataset.tab));
-$$('[data-go]').forEach(b => b.onclick = () => showTab(b.dataset.go));
 
 /* ------------------------------ drawing helpers ------------------------------ */
 function colors() {
@@ -200,7 +146,7 @@ function arrow(ctx, x1, y1, x2, y2, color, label, dash) {
   if (len < 3) return;
   const ux = dx / len, uy = dy / len, hb = Math.min(11, len * .5);
   ctx.save();
-  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 3; ctx.lineCap = 'round';
+  ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = dash ? 2 : 3; ctx.lineCap = 'round';
   if (dash) ctx.setLineDash([6, 5]);
   ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - ux * hb * .6, y2 - uy * hb * .6); ctx.stroke();
   ctx.setLineDash([]);
@@ -209,7 +155,7 @@ function arrow(ctx, x1, y1, x2, y2, color, label, dash) {
   ctx.lineTo(x2 - ux * hb + uy * hb * .5, y2 - uy * hb - ux * hb * .5);
   ctx.closePath(); ctx.fill();
   if (label) {
-    ctx.font = '700 14px system-ui,sans-serif';
+    ctx.font = `700 14px ${FONT}`;
     ctx.textAlign = ux >= 0 ? 'left' : 'right';
     ctx.fillText(label, x2 + ux * 8 + (Math.abs(ux) < .3 ? 8 : 0), y2 + uy * 8 + (Math.abs(uy) < .3 ? -8 : 12));
   }
@@ -217,209 +163,324 @@ function arrow(ctx, x1, y1, x2, y2, color, label, dash) {
 }
 const vlen = (f, k) => f > 0.01 ? Math.max(18, f * k) : 0;
 function text(ctx, str, x, y, color, size = 14, align = 'left', weight = 600) {
-  ctx.fillStyle = color; ctx.font = `${weight} ${size}px system-ui,sans-serif`; ctx.textAlign = align; ctx.fillText(str, x, y);
+  ctx.fillStyle = color; ctx.font = `${weight} ${size}px ${FONT}`; ctx.textAlign = align; ctx.fillText(str, x, y);
+}
+function box(ctx, x, y, w, h, col, label) {
+  ctx.fillStyle = col.block; ctx.strokeStyle = col.blockLine; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.roundRect(x, y, w, h, 7); ctx.fill(); ctx.stroke();
+  if (label) text(ctx, label, x + w / 2, y + h / 2 + 5, col.ink, 14, 'center', 700);
 }
 
-/* ------------------------------ SIM 1: Newton's 2nd law ------------------------------ */
-const newton = {
-  id: 'newton', tab: "Newton's 2nd Law", title: "Newton's Second Law with friction", animated: true,
-  desc: 'Push the block with force F. If F is smaller than the maximum friction μN it stays put (static friction balances F). Otherwise ΣF = ma.',
+/* ============================== SIM 1: แรงลัพธ์ ============================== */
+const resultant = {
+  id: 'resultant', tab: 'แรงลัพธ์', title: 'แรงลัพธ์ของแรงสองแรง',
+  desc: 'แรง F₁ และ F₂ กระทำต่อวัตถุจุดเดียวกัน แยกแรงเป็นองค์ประกอบ x, y แล้วรวมกันได้แรงลัพธ์ ΣF ถ้า ΣF = 0 วัตถุอยู่ในสมดุลต่อการเลื่อนที่',
+  formula: '<div class="formula">Fx = F cosθ , Fy = F sinθ</div><div class="formula">ΣFx = F₁x + F₂x , ΣFy = F₁y + F₂y</div><div class="formula">ΣF = √(ΣFx² + ΣFy²) , สมดุล: ΣF = 0</div>',
   controls: [
-    { k: 'm', label: 'Mass m', min: 1, max: 20, step: .5, val: 5, unit: ' kg' },
-    { k: 'F', label: 'Applied force F', min: 0, max: 100, step: 1, val: 30, unit: ' N' },
-    { k: 'mu', label: 'Friction coefficient μ', min: 0, max: .8, step: .05, val: .3, unit: '' }],
+    { k: 'F1', label: 'ขนาดแรง F₁', min: 0, max: 50, step: 1, val: 30, unit: ' N' },
+    { k: 'a1', label: 'ทิศของ F₁ (มุมจากแกน +x)', min: 0, max: 360, step: 5, val: 0, unit: '°' },
+    { k: 'F2', label: 'ขนาดแรง F₂', min: 0, max: 50, step: 1, val: 40, unit: ' N' },
+    { k: 'a2', label: 'ทิศของ F₂ (มุมจากแกน +x)', min: 0, max: 360, step: 5, val: 90, unit: '°' }],
+  calc() {
+    const { F1, a1, F2, a2 } = this.p;
+    const x = F1 * C(a1) + F2 * C(a2), y = F1 * S(a1) + F2 * S(a2), R = Math.hypot(x, y);
+    let ang = Math.atan2(y, x) * 180 / Math.PI; if (ang < 0) ang += 360;
+    return { x, y, R, ang, eq: R < 0.5 };
+  },
+  readout() {
+    const c = this.calc(), { F1, a1, F2, a2 } = this.p;
+    return [['F₁x , F₁y', `${fmt(F1 * C(a1), 1)} , ${fmt(F1 * S(a1), 1)} N`], ['F₂x , F₂y', `${fmt(F2 * C(a2), 1)} , ${fmt(F2 * S(a2), 1)} N`],
+      ['ΣFx', fmt(c.x, 1) + ' N'], ['ΣFy', fmt(c.y, 1) + ' N'], ['ΣF', fmt(c.R, 1) + ' N'],
+      ['ทิศของ ΣF', c.R < 0.05 ? '-' : fmt(c.ang, 0) + '°'], ['สถานะ', c.eq ? '✅ สมดุล' : 'ไม่สมดุล']];
+  },
+  draw(ctx, W, H, col) {
+    const c = this.calc(), { F1, a1, F2, a2 } = this.p, ox = 400, oy = 225, k = 4;
+    const P = (F, a) => ({ x: ox + F * C(a) * k, y: oy - F * S(a) * k });
+    ctx.strokeStyle = col.line; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(60, oy); ctx.lineTo(740, oy); ctx.moveTo(ox, 40); ctx.lineTo(ox, 410); ctx.stroke();
+    text(ctx, 'x', 748, oy + 5, col.muted, 13); text(ctx, 'y', ox + 6, 52, col.muted, 13);
+    const p1 = P(F1, a1), p2 = P(F2, a2), pr = { x: ox + c.x * k, y: oy - c.y * k };
+    ctx.save(); ctx.setLineDash([5, 5]); ctx.strokeStyle = col.muted; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(p1.x, p1.y); ctx.lineTo(pr.x, pr.y); ctx.moveTo(p2.x, p2.y); ctx.lineTo(pr.x, pr.y); ctx.stroke(); ctx.restore();
+    arrow(ctx, ox, oy, p1.x, p1.y, col.applied, 'F₁');
+    arrow(ctx, ox, oy, p2.x, p2.y, col.normal, 'F₂');
+    arrow(ctx, ox, oy, pr.x, pr.y, col.weight, 'ΣF');
+    ctx.fillStyle = col.ink; ctx.beginPath(); ctx.arc(ox, oy, 5, 0, 7); ctx.fill();
+    text(ctx, c.eq ? 'ΣF = 0 : สมดุลต่อการเลื่อนที่' : `ΣF = ${fmt(c.R, 1)} N`, 16, 28, col.ink, 15, 'left', 700);
+    text(ctx, 'เส้นประ: วิธีสี่เหลี่ยมด้านขนาน', 16, 50, col.muted, 13);
+  }
+};
+
+/* ============================== SIM 2: ดึงวัตถุบนพื้นราบ ============================== */
+const pull = {
+  id: 'pull', tab: 'ดึงวัตถุบนพื้น', title: 'ดึงหรือผลักวัตถุบนพื้นราบที่มีความเสียดทาน', animated: true,
+  desc: 'ลองตั้งมุม θ = 0° ถ้าอยากให้เป็นการผลักในแนวราบ เมื่อดึงทำมุมขึ้น แรงดึงแนวดิ่ง F sinθ จะช่วยพยุงวัตถุ ทำให้ N น้อยกว่า mg วัตถุเริ่มเคลื่อนที่เมื่อ F cosθ มากกว่าแรงเสียดทานสถิตสูงสุด μₛN',
+  formula: '<div class="formula">แนวดิ่ง: N + F sinθ = mg</div><div class="formula">ก่อนเคลื่อนที่: f = F cosθ (เมื่อ F cosθ ≤ μₛN)</div><div class="formula">เคลื่อนที่: f = μₖN , ΣF = F cosθ − μₖN = ma</div>',
+  controls: [
+    { k: 'm', label: 'มวล m', min: 1, max: 15, step: 1, val: 5, unit: ' kg' },
+    { k: 'F', label: 'แรงดึง F', min: 0, max: 100, step: 1, val: 30, unit: ' N' },
+    { k: 'theta', label: 'มุมของแรงดึงกับแนวระดับ θ', min: 0, max: 60, step: 1, val: 37, unit: '°' },
+    { k: 'mus', label: 'สัมประสิทธิ์ความเสียดทานสถิต μₛ', min: 0, max: .8, step: .05, val: .5, unit: '' },
+    { k: 'muk', label: 'สัมประสิทธิ์ความเสียดทานจลน์ μₖ', min: 0, max: .8, step: .05, val: .3, unit: '' }],
   reset() { this.x = 0; this.v = 0; },
   calc() {
-    const { m, F, mu } = this.p, N = m * G, fmax = mu * N;
+    const { m, F, theta, mus, muk } = this.p, Fx = F * C(theta), Fy = F * S(theta), W = m * G;
+    const N = Math.max(0, W - Fy), fmax = mus * N, fk = Math.min(muk, mus) * N;
     let f, a;
-    if (this.v <= 0 && F <= fmax) { f = F; a = 0; } else { f = fmax; a = (F - fmax) / m; }
-    return { N, W: m * G, f, a, net: F - f };
+    if (this.v <= 0 && Fx <= fmax) { f = Fx; a = 0; } else { f = fk; a = (Fx - fk) / m; }
+    return { W, N, Fx, Fy, f, a, net: Fx - f, fmax, lifted: Fy >= W };
   },
   step(dt) { const c = this.calc(); this.v = Math.max(0, this.v + c.a * dt); this.x += this.v * dt; },
   readout() {
-    const c = this.calc(), { F } = this.p;
-    return [['Weight W', fmt(c.W) + ' N'], ['Normal N', fmt(c.N) + ' N'], ['Applied F', fmt(F, 1) + ' N'],
-      ['Friction f', fmt(c.f) + ' N'], ['Net force ΣF', fmt(c.net) + ' N'], ['Acceleration a', fmt(c.a) + ' m/s²'],
-      ['Velocity v', fmt(this.v) + ' m/s'], ['Distance x', fmt(this.x) + ' m']];
+    const c = this.calc();
+    return [['น้ำหนัก W = mg', fmt(c.W, 1) + ' N'], ['แรงดึงแนวราบ F cosθ', fmt(c.Fx, 1) + ' N'], ['แรงดึงแนวดิ่ง F sinθ', fmt(c.Fy, 1) + ' N'],
+      ['แรงปฏิกิริยา N', fmt(c.N, 1) + ' N'], ['แรงเสียดทาน f', fmt(c.f, 1) + ' N'], ['แรงลัพธ์ ΣF', fmt(c.net, 1) + ' N'],
+      ['ความเร่ง a', fmt(c.a) + ' m/s²'], ['ความเร็ว v', fmt(this.v) + ' m/s']];
   },
   draw(ctx, W, H, col) {
-    const { m, F } = this.p, c = this.calc(), gy = 290, cx = 400, bs = 50 + m * 2.5, cy = gy - bs / 2;
+    const { m, F, theta } = this.p, c = this.calc(), gy = 300, cx = 400, bs = 46 + m * 2.4, cy = gy - bs / 2;
     ctx.fillStyle = col.ground; ctx.fillRect(0, gy, W, H - gy);
     ctx.strokeStyle = col.muted; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
-    const off = (this.x * 50) % 50;
-    ctx.lineWidth = 1;
+    const off = (this.x * 50) % 50; ctx.lineWidth = 1;
     for (let i = -1; i < 18; i++) { const x = i * 50 - off; ctx.beginPath(); ctx.moveTo(x, gy); ctx.lineTo(x, gy + 10); ctx.stroke(); }
-    text(ctx, 'ticks = 1 m', 12, H - 12, col.muted, 12);
-    ctx.fillStyle = col.block; ctx.strokeStyle = col.blockLine; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.roundRect(cx - bs / 2, gy - bs, bs, bs, 8); ctx.fill(); ctx.stroke();
-    text(ctx, `${m} kg`, cx, cy + 5, col.ink, 15, 'center', 700);
+    text(ctx, 'ขีดห่างกันขีดละ 1 เมตร', 12, H - 12, col.muted, 12);
+    box(ctx, cx - bs / 2, gy - bs, bs, bs, col, `${m} kg`);
     const k = .6;
     arrow(ctx, cx, cy, cx, cy - vlen(c.N, k), col.normal, 'N');
-    arrow(ctx, cx, cy, cx, cy + vlen(c.W, k), col.weight, 'W = mg');
-    arrow(ctx, cx, cy, cx + vlen(F, k) + bs / 2, cy, col.applied, 'F');
+    arrow(ctx, cx, cy, cx, cy + vlen(c.W, k), col.weight, 'W');
+    if (F > 0) {
+      const L = vlen(F, k) + bs / 2, ex = cx + L * C(theta), ey = cy - L * S(theta);
+      if (theta > 0) { arrow(ctx, cx, cy, ex, cy, col.applied, 'F cosθ', true); arrow(ctx, cx, cy, cx, ey, col.applied, 'F sinθ', true); }
+      arrow(ctx, cx, cy, ex, ey, col.applied, 'F');
+    }
     arrow(ctx, cx, cy, cx - vlen(c.f, k) - bs / 2, cy, col.friction, 'f');
-    const st = this.v > 0 ? 'Sliding: kinetic friction' : (F <= this.p.mu * c.N ? 'At rest: static friction balances F' : 'Ready: F exceeds max friction');
+    const st = c.lifted ? 'แรงดึงแนวดิ่งมากกว่าน้ำหนัก วัตถุลอยจากพื้น' : this.v > 0 ? 'กำลังเคลื่อนที่: ใช้ความเสียดทานจลน์ μₖN'
+      : (c.Fx <= c.fmax ? 'อยู่นิ่ง: ความเสียดทานสถิตเท่ากับ F cosθ' : 'F cosθ มากกว่า μₛN กด “เริ่ม” ได้เลย');
     text(ctx, st, 16, 28, col.ink, 15, 'left', 700);
   }
 };
 
-/* ------------------------------ SIM 2: inclined plane ------------------------------ */
+/* ============================== SIM 3: พื้นเอียง ============================== */
 const incline = {
-  id: 'incline', tab: 'Inclined Plane', title: 'Block on an inclined plane', animated: true,
-  desc: 'Weight splits into W∥ = mg sinθ (down the slope) and W⊥ = mg cosθ (into the slope). Raise θ until it slides, which happens when tanθ > μ.',
+  id: 'incline', tab: 'พื้นเอียง', title: 'วัตถุบนพื้นเอียง (มีแรงดึงขนานพื้นเอียงได้)', animated: true, PPM: 45,
+  desc: 'แตกน้ำหนักเป็น mg sinθ (ขนานพื้นเอียง) และ mg cosθ (ตั้งฉากพื้นเอียง) ลองเพิ่มมุมจนวัตถุไถลลง หรือเพิ่มแรงดึง F เพื่อดึงวัตถุขึ้นตามพื้นเอียง',
+  formula: '<div class="formula">ตั้งฉากพื้นเอียง: N = mg cosθ</div><div class="formula">ขนานพื้นเอียง: ΣF = mg sinθ − F − f (ลงเป็นบวก)</div><div class="formula">ไถลลงเมื่อ mg sinθ > μₛN  หรือ tanθ > μₛ</div>',
   controls: [
-    { k: 'm', label: 'Mass m', min: 1, max: 15, step: .5, val: 5, unit: ' kg' },
-    { k: 'theta', label: 'Angle θ', min: 0, max: 60, step: 1, val: 30, unit: '°' },
-    { k: 'mu', label: 'Friction coefficient μ', min: 0, max: 1, step: .05, val: .3, unit: '' }],
-  PPM: 45,
+    { k: 'm', label: 'มวล m', min: 1, max: 15, step: 1, val: 5, unit: ' kg' },
+    { k: 'theta', label: 'มุมเอียง θ', min: 0, max: 60, step: 1, val: 30, unit: '°' },
+    { k: 'F', label: 'แรงดึงขนานพื้นเอียง (ขึ้น) F', min: 0, max: 100, step: 1, val: 0, unit: ' N' },
+    { k: 'mus', label: 'สัมประสิทธิ์ความเสียดทานสถิต μₛ', min: 0, max: 1, step: .05, val: .6, unit: '' },
+    { k: 'muk', label: 'สัมประสิทธิ์ความเสียดทานจลน์ μₖ', min: 0, max: 1, step: .05, val: .4, unit: '' }],
   geom() {
-    const th = rad(this.p.theta), Lh = Math.min(560, 300 / Math.max(Math.sin(th), .05)), bs = 34 + this.p.m * 2;
-    return { th, Lh, bs, smax: Math.max(0, (Lh - bs - 20) / this.PPM) };
+    const th = rad(this.p.theta), Lh = Math.min(560, 300 / Math.max(Math.sin(th), .05)), bs = 32 + this.p.m * 2;
+    return { th, Lh, bs, smax: Math.max(0, (Lh - bs - 40) / this.PPM) };
   },
-  reset() { this.s = 0; this.v = 0; },
-  calc() {
-    const { m, theta, mu } = this.p, N = m * G * C(theta), Wp = m * G * S(theta), fmax = mu * N;
+  reset() { this.v = 0; this.s = this.geom().smax * .4; },
+  calc() { // บวก = ลงตามพื้นเอียง
+    const { m, theta, mus, muk, F } = this.p, N = m * G * C(theta), Wp = m * G * S(theta), D = Wp - F;
+    const fm = mus * N, fk = Math.min(muk, mus) * N;
     let f, a;
-    if (this.v <= 0 && Wp <= fmax) { f = Wp; a = 0; } else { f = fmax; a = (Wp - fmax) / m; }
-    return { N, Wp, Wn: N, f, a };
+    if (Math.abs(this.v) < 1e-6) {
+      if (Math.abs(D) <= fm) { f = -D; a = 0; } else { const sg = Math.sign(D); f = -sg * fk; a = (D + f) / m; }
+    } else { f = -Math.sign(this.v) * fk; a = (D + f) / m; }
+    return { N, Wp, Wn: N, D, f, a };
   },
   step(dt) {
-    const c = this.calc(), g = this.geom();
-    this.v = Math.max(0, this.v + c.a * dt); this.s += this.v * dt;
-    if (this.s >= g.smax) { this.s = g.smax; this.v = 0; this.running = false; this.syncRun && this.syncRun(); }
+    const c = this.calc(), g = this.geom(), v0 = this.v;
+    this.v += c.a * dt; if (v0 !== 0 && v0 * this.v < 0) this.v = 0;
+    this.s += this.v * dt;
+    if (this.s >= g.smax || this.s <= 0) { this.s = clamp(this.s, 0, g.smax); this.v = 0; this.running = false; this.syncRun && this.syncRun(); }
   },
   readout() {
-    const c = this.calc();
-    return [['Normal N = mg cosθ', fmt(c.N) + ' N'], ['W∥ = mg sinθ', fmt(c.Wp) + ' N'], ['Friction f', fmt(c.f) + ' N'],
-      ['Net along slope', fmt(c.Wp - c.f) + ' N'], ['Acceleration a', fmt(c.a) + ' m/s²'], ['Speed v', fmt(this.v) + ' m/s']];
+    const c = this.calc(), net = c.D + c.f;
+    return [['N = mg cosθ', fmt(c.N, 1) + ' N'], ['mg sinθ', fmt(c.Wp, 1) + ' N'], ['แรงดึง F', fmt(this.p.F, 1) + ' N'],
+      ['แรงเสียดทาน f', fmt(Math.abs(c.f), 1) + ' N ' + (c.f < -0.05 ? '(ขึ้นพื้นเอียง)' : c.f > 0.05 ? '(ลงพื้นเอียง)' : '')],
+      ['แรงลัพธ์ตามพื้นเอียง', fmt(Math.abs(net), 1) + ' N ' + (net > 0.05 ? '(ลง)' : net < -0.05 ? '(ขึ้น)' : '')],
+      ['ความเร่ง a', fmt(Math.abs(c.a)) + ' m/s²'], ['ความเร็ว v', fmt(Math.abs(this.v)) + ' m/s']];
   },
   draw(ctx, W, H, col) {
-    const g = this.geom(), c = this.calc(), { th, Lh, bs } = g, { theta } = this.p;
-    const B = { x: 740, y: 380 }, A = { x: B.x - Lh * Math.cos(th), y: B.y - Lh * Math.sin(th) };
+    const g = this.geom(), c = this.calc(), { th, Lh, bs } = g, { theta, m, F } = this.p;
+    const B = { x: 740, y: 390 }, A = { x: B.x - Lh * Math.cos(th), y: B.y - Lh * Math.sin(th) };
     ctx.fillStyle = col.ground; ctx.strokeStyle = col.muted; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.lineTo(A.x, B.y); ctx.closePath(); ctx.fill(); ctx.stroke();
     const u = { x: Math.cos(th), y: Math.sin(th) }, n = { x: Math.sin(th), y: -Math.cos(th) };
-    const s = Math.min(this.s, g.smax), d = bs / 2 + 20 + s * this.PPM;
+    const s = clamp(this.s, 0, g.smax), d = bs / 2 + 20 + s * this.PPM;
     const cen = { x: A.x + u.x * d + n.x * bs / 2, y: A.y + u.y * d + n.y * bs / 2 };
     ctx.save(); ctx.translate(cen.x, cen.y); ctx.rotate(th);
-    ctx.fillStyle = col.block; ctx.strokeStyle = col.blockLine; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.roundRect(-bs / 2, -bs / 2, bs, bs, 6); ctx.fill(); ctx.stroke();
+    box(ctx, -bs / 2, -bs / 2, bs, bs, col, null);
     ctx.restore();
-    const k = .5;
-    const Wl = this.p.m * G;
+    const k = .5, Wl = m * G;
     arrow(ctx, cen.x, cen.y, cen.x + u.x * vlen(c.Wp, k), cen.y + u.y * vlen(c.Wp, k), col.weight, 'mg sinθ', true);
     arrow(ctx, cen.x, cen.y, cen.x - n.x * vlen(c.Wn, k), cen.y - n.y * vlen(c.Wn, k), col.weight, 'mg cosθ', true);
     arrow(ctx, cen.x, cen.y, cen.x, cen.y + vlen(Wl, k), col.weight, 'W');
     arrow(ctx, cen.x, cen.y, cen.x + n.x * vlen(c.N, k), cen.y + n.y * vlen(c.N, k), col.normal, 'N');
-    arrow(ctx, cen.x, cen.y, cen.x - u.x * vlen(c.f, k), cen.y - u.y * vlen(c.f, k), col.friction, 'f');
+    if (F > 0) arrow(ctx, cen.x, cen.y, cen.x - u.x * vlen(F, k), cen.y - u.y * vlen(F, k), col.applied, 'F');
+    const fl = Math.abs(c.f), fs = -Math.sign(c.f); // fs = -1 → ขึ้นพื้นเอียง
+    if (fl > 0.05) arrow(ctx, cen.x, cen.y, cen.x + u.x * fs * -1 * vlen(fl, k) * -1, cen.y + u.y * fs * -1 * vlen(fl, k) * -1, col.friction, 'f');
     ctx.strokeStyle = col.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(B.x, B.y, 64, Math.PI, Math.PI + th); ctx.stroke();
-    text(ctx, `θ = ${theta}°`, B.x - 150, B.y - 10, col.ink, 14, 'left', 700);
-    const slides = this.v > 0 || c.a > 0;
-    text(ctx, slides ? 'Sliding down the slope' : 'Stays at rest (static friction ≥ mg sinθ)', 16, 28, col.ink, 15, 'left', 700);
+    text(ctx, `θ = ${theta}°`, B.x - 160, B.y - 12, col.ink, 14, 'left', 700);
+    const mv = Math.abs(this.v) > 1e-6;
+    const st = mv ? (this.v > 0 ? 'กำลังไถลลงตามพื้นเอียง' : 'กำลังถูกดึงขึ้นตามพื้นเอียง')
+      : (Math.abs(c.a) < 1e-9 ? 'อยู่นิ่ง: แรงตามพื้นเอียงสมดุลกัน (ΣF = 0)' : (c.a > 0 ? 'จะไถลลง กด “เริ่ม”' : 'จะถูกดึงขึ้น กด “เริ่ม”'));
+    text(ctx, st, 16, 28, col.ink, 15, 'left', 700);
   }
 };
 
-/* ------------------------------ SIM 3: sign on two cables ------------------------------ */
-const sign = {
-  id: 'cables', tab: 'Hanging Sign', title: 'Equilibrium: a sign on two cables',
-  desc: 'The sign is at rest, so ΣFx = 0 and ΣFy = 0. Change the cable angles and watch the tensions T₁ and T₂ change. Flat cables mean huge tension!',
+/* ============================== SIM 4: รอก / เชือกผูก ============================== */
+const pulley = {
+  id: 'pulley', tab: 'รอก / เชือกผูก', title: 'วัตถุสองก้อนผูกเชือกผ่านรอก', animated: true, PPM: 28, SMAX: 2.5,
+  desc: 'มวล m₁ อยู่บนโต๊ะ มวล m₂ ห้อยข้างโต๊ะ เชือกเบา รอกไม่มีความฝืด วัตถุทั้งสองเคลื่อนที่ด้วยความเร่งขนาดเท่ากันและแรงตึงเชือกเท่ากัน ลองตั้ง μ = 0 เทียบกับโต๊ะที่มีความเสียดทาน',
+  formula: '<div class="formula">m₂: m₂g − T = m₂a</div><div class="formula">m₁: T − μm₁g = m₁a</div><div class="formula">a = (m₂ − μm₁)g / (m₁ + m₂) , T = m₁(a + μg)</div>',
   controls: [
-    { k: 'm', label: 'Sign mass m', min: 5, max: 40, step: 1, val: 20, unit: ' kg' },
-    { k: 'a1', label: 'Left cable angle α', min: 20, max: 75, step: 1, val: 40, unit: '°' },
-    { k: 'a2', label: 'Right cable angle β', min: 20, max: 75, step: 1, val: 55, unit: '°' }],
+    { k: 'm1', label: 'มวลบนโต๊ะ m₁', min: 1, max: 10, step: 1, val: 4, unit: ' kg' },
+    { k: 'm2', label: 'มวลที่ห้อย m₂', min: 1, max: 10, step: 1, val: 3, unit: ' kg' },
+    { k: 'mu', label: 'สัมประสิทธิ์ความเสียดทานของโต๊ะ μ', min: 0, max: .6, step: .05, val: .2, unit: '' }],
+  reset() { this.s = 0; this.v = 0; },
+  calc() {
+    const { m1, m2, mu } = this.p, fmax = mu * m1 * G, w2 = m2 * G;
+    let a, f, Tn;
+    if (this.v <= 0 && w2 <= fmax) { a = 0; f = w2; Tn = w2; } else { a = (w2 - fmax) / (m1 + m2); f = fmax; Tn = m2 * (G - a); }
+    return { a, f, Tn, N: m1 * G, W1: m1 * G, W2: w2 };
+  },
+  step(dt) {
+    const c = this.calc(); this.v = Math.max(0, this.v + c.a * dt); this.s += this.v * dt;
+    if (this.s >= this.SMAX) { this.s = this.SMAX; this.v = 0; this.running = false; this.syncRun && this.syncRun(); }
+  },
+  readout() {
+    const c = this.calc();
+    return [['น้ำหนัก m₁g', fmt(c.W1, 1) + ' N'], ['น้ำหนัก m₂g', fmt(c.W2, 1) + ' N'], ['แรงปฏิกิริยาบน m₁ (N)', fmt(c.N, 1) + ' N'],
+      ['แรงเสียดทาน f', fmt(c.f, 1) + ' N'], ['แรงตึงเชือก T', fmt(c.Tn, 2) + ' N'], ['ความเร่ง a', fmt(c.a) + ' m/s²'], ['ความเร็ว v', fmt(this.v) + ' m/s']];
+  },
+  draw(ctx, W, H, col) {
+    const { m1, m2 } = this.p, c = this.calc(), tt = 250, bw = 56, bh = 56, cx1 = 250 + this.s * this.PPM, cy1 = tt - bh / 2;
+    ctx.fillStyle = col.ground;
+    ctx.fillRect(70, tt, 500, 22); ctx.fillRect(90, tt + 22, 14, 130); ctx.fillRect(536, tt + 22, 14, 130);
+    ctx.fillStyle = col.ground; ctx.fillRect(0, 402, W, 18);
+    ctx.strokeStyle = col.muted; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(588, 240, 18, 0, 7); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(570, tt); ctx.lineTo(588, 240); ctx.stroke();
+    const h2 = 36 + m2 * 3, top2 = 275 + this.s * this.PPM;
+    ctx.strokeStyle = col.ink; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx1 + bw / 2, cy1); ctx.lineTo(588, 222); ctx.arc(588, 240, 18, -Math.PI / 2, 0); ctx.lineTo(606, top2); ctx.stroke();
+    box(ctx, cx1 - bw / 2, tt - bh, bw, bh, col, `m₁`);
+    box(ctx, 606 - 28, top2, 56, h2, col, `m₂`);
+    const k = .6;
+    arrow(ctx, cx1, cy1, cx1, cy1 - vlen(c.N, k), col.normal, 'N');
+    arrow(ctx, cx1, cy1, cx1, cy1 + vlen(c.W1, k), col.weight, 'W₁');
+    arrow(ctx, cx1, cy1, cx1 + vlen(c.Tn, k) + 28, cy1, col.tension, 'T');
+    arrow(ctx, cx1, cy1, cx1 - vlen(c.f, k) - 28, cy1, col.friction, 'f');
+    const cy2 = top2 + h2 / 2;
+    arrow(ctx, 606, cy2, 606, cy2 + vlen(c.W2, k), col.weight, 'W₂');
+    arrow(ctx, 606, cy2, 606, cy2 - vlen(c.Tn, k), col.tension, 'T');
+    const st = this.v > 0 ? 'กำลังเคลื่อนที่: m₂ ลง m₁ ไปทางรอก' : (c.a === 0 ? 'อยู่นิ่ง: ความเสียดทานสถิตรั้งไว้ได้' : 'พร้อมแล้ว กด “เริ่ม”');
+    text(ctx, st, 16, 28, col.ink, 15, 'left', 700);
+  }
+};
+
+/* ============================== SIM 5: เชือกแขวน (สมดุล) ============================== */
+const sign = {
+  id: 'cables', tab: 'เชือกแขวน (สมดุล)', title: 'สมดุลต่อการเลื่อนที่: ป้ายแขวนด้วยเชือกสองเส้น',
+  desc: 'ป้ายหยุดนิ่ง จึงได้ ΣFx = 0 และ ΣFy = 0 ที่ปมเชือก ปรับมุมของเชือกแล้วดูว่าแรงตึง T₁, T₂ เปลี่ยนอย่างไร (เชือกยิ่งเกือบแนวราบ แรงตึงยิ่งมาก)',
+  formula: '<div class="formula">แนวราบ: T₁ cosα = T₂ cosβ</div><div class="formula">แนวดิ่ง: T₁ sinα + T₂ sinβ = mg</div><div class="formula">T₁ = mg cosβ / sin(α+β) , T₂ = mg cosα / sin(α+β)</div>',
+  controls: [
+    { k: 'm', label: 'มวลป้าย m', min: 5, max: 30, step: 1, val: 20, unit: ' kg' },
+    { k: 'a1', label: 'มุมเชือกซ้าย α (กับแนวระดับ)', min: 20, max: 75, step: 1, val: 37, unit: '°' },
+    { k: 'a2', label: 'มุมเชือกขวา β (กับแนวระดับ)', min: 20, max: 75, step: 1, val: 53, unit: '°' }],
   calc() {
     const { m, a1, a2 } = this.p, W = m * G, den = S(a1 + a2);
     const T1 = W * C(a2) / den, T2 = W * C(a1) / den;
     return { W, T1, T2, fx: T2 * C(a2) - T1 * C(a1), fy: T1 * S(a1) + T2 * S(a2) - W };
   },
   readout() {
-    const c = this.calc();
-    return [['Weight W', fmt(c.W) + ' N'], ['Tension T₁', fmt(c.T1) + ' N'], ['Tension T₂', fmt(c.T2) + ' N'],
-      ['T₁x (←)', fmt(c.T1 * C(this.p.a1)) + ' N'], ['T₂x (→)', fmt(c.T2 * C(this.p.a2)) + ' N'],
-      ['ΣFx', fmt(Math.abs(c.fx) < 1e-9 ? 0 : c.fx) + ' N'], ['ΣFy', fmt(Math.abs(c.fy) < 1e-9 ? 0 : c.fy) + ' N']];
+    const c = this.calc(), { a1, a2 } = this.p, z = v => fmt(Math.abs(v) < 1e-9 ? 0 : v, 1);
+    return [['น้ำหนัก W = mg', fmt(c.W, 1) + ' N'], ['แรงตึง T₁', fmt(c.T1, 1) + ' N'], ['แรงตึง T₂', fmt(c.T2, 1) + ' N'],
+      ['T₁ cosα (ซ้าย)', fmt(c.T1 * C(a1), 1) + ' N'], ['T₂ cosβ (ขวา)', fmt(c.T2 * C(a2), 1) + ' N'],
+      ['T₁ sinα + T₂ sinβ', fmt(c.T1 * S(a1) + c.T2 * S(a2), 1) + ' N'], ['ΣFx , ΣFy', `${z(c.fx)} , ${z(c.fy)} N`]];
   },
   draw(ctx, W, H, col) {
-    const { m, a1, a2 } = this.p, c = this.calc(), kx = 400, ky = 290, L = 240;
+    const { m, a1, a2 } = this.p, c = this.calc(), kx = 400, ky = 220, L = 210;
     const P1 = { x: kx - L * C(a1), y: ky - L * S(a1) }, P2 = { x: kx + L * C(a2), y: ky - L * S(a2) };
     ctx.strokeStyle = col.muted; ctx.lineWidth = 3;
     [P1, P2].forEach(P => { ctx.beginPath(); ctx.moveTo(P.x, P.y); ctx.lineTo(kx, ky); ctx.stroke(); });
     ctx.fillStyle = col.muted; [P1, P2].forEach(P => { ctx.beginPath(); ctx.arc(P.x, P.y, 7, 0, 7); ctx.fill(); });
-    ctx.fillStyle = col.block; ctx.strokeStyle = col.blockLine; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(kx, ky); ctx.lineTo(kx, ky + 12); ctx.stroke();
-    ctx.beginPath(); ctx.roundRect(kx - 75, ky + 12, 150, 70, 8); ctx.fill(); ctx.stroke();
-    text(ctx, `SIGN ${m} kg`, kx, ky + 54, col.ink, 16, 'center', 700);
+    ctx.strokeStyle = col.blockLine; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(kx, ky); ctx.lineTo(kx, ky + 12); ctx.stroke();
+    box(ctx, kx - 75, ky + 12, 150, 70, col, `ป้าย ${m} kg`);
     ctx.fillStyle = col.ink; ctx.beginPath(); ctx.arc(kx, ky, 6, 0, 7); ctx.fill();
-    const k = .45;
+    const k = .26;
     arrow(ctx, kx, ky, kx - C(a1) * vlen(c.T1, k), ky - S(a1) * vlen(c.T1, k), col.tension, 'T₁');
     arrow(ctx, kx, ky, kx + C(a2) * vlen(c.T2, k), ky - S(a2) * vlen(c.T2, k), col.tension, 'T₂');
-    arrow(ctx, kx, ky, kx, ky + vlen(c.W, k) + 60, col.weight, 'W');
+    arrow(ctx, kx, ky + 47, kx, ky + 47 + vlen(c.W, k), col.weight, 'W');
     ctx.strokeStyle = col.ink; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(kx - 60, ky); ctx.lineTo(kx - 20, ky); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(kx - 70, ky); ctx.lineTo(kx - 20, ky); ctx.stroke();
     ctx.beginPath(); ctx.arc(kx, ky, 46, Math.PI, Math.PI + rad(a1)); ctx.stroke();
     ctx.beginPath(); ctx.arc(kx, ky, 46, -rad(a2), 0); ctx.stroke();
-    text(ctx, `α=${a1}°`, kx - 100, ky - 8, col.ink, 13, 'center');
-    text(ctx, `β=${a2}°`, kx + 100, ky - 8, col.ink, 13, 'center');
-    text(ctx, 'Static equilibrium: ΣF = 0', 16, 28, col.ink, 15, 'left', 700);
+    text(ctx, `α=${a1}°`, kx - 98, ky - 8, col.ink, 13, 'center');
+    text(ctx, `β=${a2}°`, kx + 98, ky - 8, col.ink, 13, 'center');
+    text(ctx, 'สมดุลต่อการเลื่อนที่: ΣF = 0', 16, 28, col.ink, 15, 'left', 700);
   }
 };
 
-/* ------------------------------ SIM 4: lever / torque ------------------------------ */
+/* ============================== SIM 6: คานและโมเมนต์ ============================== */
 const lever = {
-  id: 'lever', tab: 'Torque & Seesaw', title: 'Rotational equilibrium: the seesaw',
-  desc: 'A massless 10 m beam balances when the net torque about the pivot is zero: m₁·d₁ = m₂·d₂. Try the auto-balance button, which places the pivot at the center of mass.',
+  id: 'lever', tab: 'คาน / โมเมนต์', title: 'สมดุลต่อการหมุน: คานกับโมเมนต์ของแรง',
+  desc: 'คานยาว 10 m หมุนรอบจุดหมุน โมเมนต์ของแรง = แรง × ระยะตั้งฉากจากจุดหมุน คานสมดุลเมื่อผลรวมโมเมนต์ตามเข็ม = ผลรวมโมเมนต์ทวนเข็ม กดปุ่มเลื่อนจุดหมุนให้ไปอยู่ที่ศูนย์กลางมวลได้เลย',
+  formula: '<div class="formula">โมเมนต์ τ = F × d (d = ระยะตั้งฉาก)</div><div class="formula">สมดุลต่อการหมุน: Στ = 0 (ตามเข็ม = ทวนเข็ม)</div><div class="formula">สมดุลต่อการเลื่อนที่: N = (m₁ + m₂ + m_คาน)g</div>',
   controls: [
-    { k: 'm1', label: 'Mass m₁ (left)', min: 1, max: 10, step: 1, val: 4, unit: ' kg' },
-    { k: 'x1', label: 'Position of m₁', min: 0, max: 10, step: .5, val: 1, unit: ' m' },
-    { k: 'm2', label: 'Mass m₂ (right)', min: 1, max: 10, step: 1, val: 2, unit: ' kg' },
-    { k: 'x2', label: 'Position of m₂', min: 0, max: 10, step: .5, val: 8, unit: ' m' },
-    { k: 'pv', label: 'Pivot position', min: .5, max: 9.5, step: .1, val: 5, unit: ' m' }],
-  buttons: [{ label: 'Auto-balance pivot', fn(sim) {
-    const { m1, x1, m2, x2 } = sim.p; sim.setParam('pv', clamp((m1 * x1 + m2 * x2) / (m1 + m2), .5, 9.5)); } }],
+    { k: 'm1', label: 'มวล m₁ (ซ้าย)', min: 1, max: 10, step: 1, val: 4, unit: ' kg' },
+    { k: 'x1', label: 'ตำแหน่งของ m₁ จากปลายซ้าย', min: 0, max: 10, step: .5, val: 1, unit: ' m' },
+    { k: 'm2', label: 'มวล m₂ (ขวา)', min: 1, max: 10, step: 1, val: 2, unit: ' kg' },
+    { k: 'x2', label: 'ตำแหน่งของ m₂ จากปลายซ้าย', min: 0, max: 10, step: .5, val: 8, unit: ' m' },
+    { k: 'mb', label: 'มวลคาน (สม่ำเสมอ)', min: 0, max: 10, step: 1, val: 0, unit: ' kg' },
+    { k: 'pv', label: 'ตำแหน่งจุดหมุน', min: .5, max: 9.5, step: .1, val: 5, unit: ' m' }],
+  buttons: [{ label: 'เลื่อนจุดหมุนให้สมดุล', fn(sim) {
+    const { m1, x1, m2, x2, mb } = sim.p; sim.setParam('pv', clamp(Math.round(((m1 * x1 + m2 * x2 + mb * 5) / (m1 + m2 + mb)) * 10) / 10, .5, 9.5)); } }],
   ang: 0,
   calc() {
-    const { m1, x1, m2, x2, pv } = this.p;
-    const t1 = m1 * G * (x1 - pv), t2 = m2 * G * (x2 - pv), net = t1 + t2; // + = clockwise
-    return { t1, t2, net, bal: Math.abs(net) < 1, R: (m1 + m2) * G, cm: (m1 * x1 + m2 * x2) / (m1 + m2) };
+    const { m1, x1, m2, x2, mb, pv } = this.p;
+    const t1 = m1 * G * (x1 - pv), t2 = m2 * G * (x2 - pv), tb = mb * G * (5 - pv), net = t1 + t2 + tb; // + = ตามเข็ม
+    return { t1, t2, tb, net, bal: Math.abs(net) < 1, R: (m1 + m2 + mb) * G, cm: (m1 * x1 + m2 * x2 + mb * 5) / (m1 + m2 + mb) };
   },
   step(dt) { const c = this.calc(), tgt = c.bal ? 0 : .35 * Math.tanh(c.net / 150); this.ang += (tgt - this.ang) * Math.min(1, dt * 4); },
   readout() {
-    const c = this.calc(), cw = v => `${fmt(Math.abs(v), 1)} N·m ${v > 0.05 ? '↻' : v < -0.05 ? '↺' : ''}`;
-    return [['Torque of m₁', cw(c.t1)], ['Torque of m₂', cw(c.t2)], ['Net torque Στ', cw(c.net)],
-      ['Pivot force N', fmt(c.R) + ' N'], ['Center of mass', fmt(c.cm) + ' m'], ['Status', c.bal ? '✅ Balanced' : '⚠️ Rotating']];
+    const c = this.calc(), w = v => `${fmt(Math.abs(v), 1)} N·m ${v > 0.05 ? '↻' : v < -0.05 ? '↺' : ''}`;
+    return [['โมเมนต์ของ m₁', w(c.t1)], ['โมเมนต์ของ m₂', w(c.t2)], ['โมเมนต์ของคาน', w(c.tb)], ['Στ รวม', w(c.net)],
+      ['แรงที่จุดหมุน N', fmt(c.R, 1) + ' N'], ['ศูนย์กลางมวล', fmt(c.cm, 2) + ' m'], ['สถานะ', c.bal ? '✅ สมดุล' : '⚠️ คานหมุน']];
   },
   draw(ctx, W, H, col) {
-    const { m1, x1, m2, x2, pv } = this.p, PPM = 60, left = 100, py = 280, px = left + pv * PPM, ph = this.ang;
+    const { m1, x1, m2, x2, mb, pv } = this.p, PPM = 60, left = 100, py = 270, px = left + pv * PPM, ph = this.ang;
     ctx.fillStyle = col.ground; ctx.fillRect(0, py + 70, W, H);
     ctx.fillStyle = col.muted; ctx.beginPath(); ctx.moveTo(px, py + 8); ctx.lineTo(px - 28, py + 70); ctx.lineTo(px + 28, py + 70); ctx.closePath(); ctx.fill();
     ctx.save(); ctx.translate(px, py); ctx.rotate(ph);
     ctx.fillStyle = col.ink; ctx.fillRect(-pv * PPM, -6, 10 * PPM, 12);
     ctx.fillStyle = col.muted; for (let i = 0; i <= 10; i++) ctx.fillRect((i - pv) * PPM - 1, 6, 2, 8);
-    [[m1, x1, '₁'], [m2, x2, '₂']].forEach(([m, x, s]) => {
+    [[m1, x1, 'm₁'], [m2, x2, 'm₂']].forEach(([m, x, s]) => {
       const bs = 22 + m * 3.5, bx = (x - pv) * PPM;
       ctx.fillStyle = col.block; ctx.strokeStyle = col.blockLine; ctx.lineWidth = 3;
       ctx.beginPath(); ctx.roundRect(bx - bs / 2, -6 - bs, bs, bs, 5); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = col.ink; ctx.font = '700 13px system-ui'; ctx.textAlign = 'center'; ctx.fillText(`m${s}`, bx, -6 - bs / 2 + 5);
+      text(ctx, s, bx, -6 - bs / 2 + 5, col.ink, 13, 'center', 700);
     });
     ctx.restore();
-    [[m1, x1], [m2, x2]].forEach(([m, x]) => {
+    const items = [[m1 * G, x1, `${fmt(m1 * G, 0)} N`], [m2 * G, x2, `${fmt(m2 * G, 0)} N`]];
+    if (mb > 0) items.push([mb * G, 5, `W คาน ${fmt(mb * G, 0)} N`]);
+    items.forEach(([w, x, lb]) => {
       const dx = (x - pv) * PPM, wx = px + dx * Math.cos(ph), wy = py + dx * Math.sin(ph) + 8;
-      arrow(ctx, wx, wy, wx, wy + vlen(m * G, .45) + 4, col.weight, `${fmt(m * G, 0)} N`);
+      arrow(ctx, wx, wy, wx, wy + vlen(w, .45) + 4, col.weight, lb);
     });
-    text(ctx, `${(x1 - pv).toFixed(1)} m`, left + (x1 + pv) / 2 * PPM - pv * PPM * 0 - 0, 392, col.muted, 12, 'center');
+    arrow(ctx, px, py + 70, px, py + 70 - vlen((m1 + m2 + mb) * G, .45) - 4, col.normal, 'N');
     const c = this.calc();
-    text(ctx, c.bal ? 'Στ = 0: rotational equilibrium' : 'Στ ≠ 0: beam rotates', 16, 28, col.ink, 15, 'left', 700);
-    text(ctx, `Lever arms: d₁ = ${fmt(Math.abs(x1 - pv), 1)} m, d₂ = ${fmt(Math.abs(x2 - pv), 1)} m`, 16, 50, col.muted, 13);
+    text(ctx, c.bal ? 'Στ = 0 : สมดุลต่อการหมุน' : 'Στ ≠ 0 : คานหมุน', 16, 28, col.ink, 15, 'left', 700);
+    text(ctx, `ระยะตั้งฉาก d₁ = ${fmt(Math.abs(x1 - pv), 1)} m , d₂ = ${fmt(Math.abs(x2 - pv), 1)} m`, 16, 50, col.muted, 13);
   }
 };
 
 /* ------------------------------ sim framework ------------------------------ */
-const sims = [newton, incline, sign, lever];
+const sims = [resultant, pull, incline, pulley, sign, lever];
 function mount(sim) {
   sim.p = {}; sim.controls.forEach(c => sim.p[c.k] = c.val);
   const root = document.createElement('article'); root.className = 'sim'; root.hidden = true;
   root.innerHTML = `<h3>${sim.title}</h3><p class="muted">${sim.desc}</p>
     <div class="sim-grid"><canvas width="800" height="420"></canvas>
-    <div class="side"><div class="controls card" style="padding:14px 16px 4px"></div><div class="btns"></div><dl class="readout"></dl></div></div>`;
+    <div class="side"><div class="controls card" style="padding:14px 16px 4px"></div><div class="btns"></div><dl class="readout"></dl></div></div>
+    <div class="card below"><h3>สูตรที่ใช้</h3>${sim.formula}</div>`;
   $('#simhost').append(root);
   const cv = $('canvas', root), dpr = window.devicePixelRatio || 1;
   cv.width = 800 * dpr; cv.height = 420 * dpr;
@@ -438,10 +499,10 @@ function mount(sim) {
   if (sim.animated) {
     sim.running = false; sim.reset();
     const run = document.createElement('button'); run.className = 'btn'; bx.append(run);
-    sim.syncRun = () => run.textContent = sim.running ? '⏸ Pause' : '▶ Start';
+    sim.syncRun = () => run.textContent = sim.running ? '⏸ หยุด' : '▶ เริ่ม';
     run.onclick = () => { sim.running = !sim.running; sim.syncRun(); };
     sim.syncRun();
-    const rs = document.createElement('button'); rs.className = 'btn ghost'; rs.textContent = '↺ Reset'; bx.append(rs);
+    const rs = document.createElement('button'); rs.className = 'btn ghost'; rs.textContent = '↺ เริ่มใหม่'; bx.append(rs);
     rs.onclick = () => { sim.running = false; sim.reset(); sim.syncRun(); };
   }
   (sim.buttons || []).forEach(b => { const e = document.createElement('button'); e.className = 'btn ghost'; e.textContent = b.label; e.onclick = () => b.fn(sim); bx.append(e); });
@@ -453,7 +514,7 @@ function selectSim(sim) {
   sims.forEach(s => { s.root.hidden = s !== sim; s.pill.setAttribute('aria-selected', s === sim); });
   currentSim = sim; if (!$('#sims').hidden) active = sim;
 }
-sims.forEach(mount); selectSim(newton);
+sims.forEach(mount); selectSim(pull);
 
 let last = 0;
 function loop(t) {
@@ -469,75 +530,87 @@ function loop(t) {
 }
 requestAnimationFrame(loop);
 
-/* ------------------------------ PRE-TEST ------------------------------ */
+/* ============================== PRE-TEST ============================== */
 const gens = [
+  // 1 แรงลัพธ์
+  () => { const [a, b, c] = pick([[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17]]), k = rnd(1, 4), m = rnd(2, 10), F = c * k, ac = F / m;
+    return { tag: 'แรงลัพธ์', hint: 'แรงสองแรงตั้งฉากกัน หาแรงลัพธ์ด้วยทฤษฎีบทพีทาโกรัส แล้วใช้ ΣF = ma',
+      text: `แรง ${a * k} N ทิศตะวันออก และแรง ${b * k} N ทิศเหนือ กระทำต่อวัตถุมวล ${m} kg บนพื้นลื่น จงหาขนาดของแรงลัพธ์ ΣF และขนาดความเร่ง a`,
+      parts: [{ s: 'ΣF', u: 'N', ans: F }, { s: 'a', u: 'm/s²', ans: ac }],
+      sol: [`ΣF = √(${a * k}² + ${b * k}²) = <b>${fmt(F)} N</b>`, `a = ΣF/m = ${fmt(F)}/${m} = <b>${fmt(ac)} m/s²</b>`] }; },
+  // 2 ดึงทำมุมบนพื้นราบ
   () => { let m, F, th, mu, N, a;
-    do { m = rnd(4, 12); F = rnd(20, 60); th = pick([20, 30, 37, 45]); mu = pick([.1, .2, .3]); N = m * G - F * S(th); a = (F * C(th) - mu * N) / m; } while (N <= 0 || a < .3);
-    return { tag: 'Forces & friction', hint: 'The vertical component of F lowers N. Friction uses the actual N.',
-      text: `A ${m} kg crate sits on a rough floor (μk = ${mu}). A rope pulls it with F = ${F} N at ${th}° above the horizontal. Find the normal force N and the acceleration a.`,
+    do { m = rnd(4, 10); F = rnd(4, 10) * 5; th = pick([37, 53]); mu = pick([.1, .2, .25]); N = m * G - F * S(th); a = (F * C(th) - mu * N) / m; } while (N <= 0 || a < .3);
+    return { tag: 'ดึงวัตถุบนพื้นราบ', hint: 'แยกแรงดึงเป็นองค์ประกอบแนวราบและแนวดิ่ง แรงดึงแนวดิ่งทำให้ N น้อยกว่า mg แล้วใช้ f = μₖN',
+      text: `ออกแรงดึงเชือก ${F} N ทำมุม ${th}° กับแนวระดับ ดึงกล่องมวล ${m} kg บนพื้นราบที่มีสัมประสิทธิ์ความเสียดทานจลน์ ${mu} จงหาแรงปฏิกิริยาตั้งฉาก N และความเร่ง a`,
       parts: [{ s: 'N', u: 'N', ans: N }, { s: 'a', u: 'm/s²', ans: a }],
-      sol: [`Vertical: N + F sinθ − mg = 0 → N = ${fmt(m * G)} − ${fmt(F * S(th))} = <b>${fmt(N)} N</b>`,
-        `Horizontal: F cosθ − μN = ma → a = (${fmt(F * C(th))} − ${fmt(mu * N)})/${m} = <b>${fmt(a)} m/s²</b>`] }; },
-  () => { const m1 = rnd(2, 8), m2 = rnd(2, 8), F = rnd(12, 40), a = F / (m1 + m2), t = m2 * a;
-    return { tag: 'Connected bodies', hint: 'Treat both blocks as one system for a. Then isolate block 2 for T.',
-      text: `Blocks m₁ = ${m1} kg and m₂ = ${m2} kg are tied by a light rope on a frictionless table. A horizontal force F = ${F} N pulls m₁, and m₂ trails behind it. Find the acceleration a and the rope tension T.`,
-      parts: [{ s: 'a', u: 'm/s²', ans: a }, { s: 'T', u: 'N', ans: t }],
-      sol: [`System: F = (m₁+m₂)a → a = ${F}/${m1 + m2} = <b>${fmt(a)} m/s²</b>`, `Block 2 alone: T = m₂a = ${m2} × ${fmt(a)} = <b>${fmt(t)} N</b>`] }; },
-  () => { const m1 = rnd(4, 10), m2 = m1 - rnd(1, 3), a = (m1 - m2) * G / (m1 + m2), t = 2 * m1 * m2 * G / (m1 + m2);
-    return { tag: 'Atwood machine', hint: 'Write ΣF for each mass with the same T and the same |a|.',
-      text: `An Atwood machine has masses ${m1} kg and ${m2} kg on a light rope over a frictionless pulley. Find the acceleration a of the masses and the tension T.`,
-      parts: [{ s: 'a', u: 'm/s²', ans: a }, { s: 'T', u: 'N', ans: t }],
-      sol: [`Heavy: m₁g − T = m₁a · Light: T − m₂g = m₂a`, `Add: a = (m₁−m₂)g/(m₁+m₂) = <b>${fmt(a)} m/s²</b>`, `T = m₂(g + a) = <b>${fmt(t)} N</b>`] }; },
-  () => { const m = rnd(3, 10), th = pick([30, 37, 40, 45]), mu = pick([.1, .15, .2]), N = m * G * C(th), a = G * (S(th) - mu * C(th));
-    return { tag: 'Inclined plane', hint: 'Axes along and perpendicular to the slope. N balances mg cosθ.',
-      text: `A ${m} kg block slides down a ${th}° incline with μk = ${mu}. Find the normal force N and the acceleration a down the slope.`,
-      parts: [{ s: 'N', u: 'N', ans: N }, { s: 'a', u: 'm/s²', ans: a }],
-      sol: [`Perpendicular: N = mg cosθ = ${m}×9.8×${fmt(C(th), 3)} = <b>${fmt(N)} N</b>`, `Along slope: mg sinθ − μN = ma → a = g(sinθ − μcosθ) = <b>${fmt(a)} m/s²</b>`] }; },
-  () => { const m = rnd(10, 40), a1 = pick([30, 37, 45, 53]), a2 = pick([37, 45, 53, 60]), W = m * G, t1 = W * C(a2) / S(a1 + a2), t2 = W * C(a1) / S(a1 + a2);
-    return { tag: 'Equilibrium', hint: 'ΣFx = 0 and ΣFy = 0 at the knot: two equations, two unknowns.',
-      text: `A ${m} kg sign hangs from two cables. The left cable makes ${a1}° with the horizontal and the right cable ${a2}°. Find the tensions T₁ (left) and T₂ (right).`,
-      parts: [{ s: 'T₁', u: 'N', ans: t1 }, { s: 'T₂', u: 'N', ans: t2 }],
-      sol: [`x: T₁cos${a1}° = T₂cos${a2}° · y: T₁sin${a1}° + T₂sin${a2}° = ${fmt(W)}`, `T₁ = W cosβ / sin(α+β) = <b>${fmt(t1)} N</b>`, `T₂ = W cosα / sin(α+β) = <b>${fmt(t2)} N</b>`] }; },
-  () => { const m = rnd(50, 80), a = pick([1, 1.5, 2, 2.5]), up = m * (G + a), dn = m * (G - a);
-    return { tag: 'Apparent weight', hint: 'The scale reads N. Take "up" as positive: N − mg = ma.',
-      text: `A ${m} kg person stands on a scale in an elevator whose acceleration has magnitude ${a} m/s². Find the scale reading N when accelerating upward and N′ when accelerating downward.`,
-      parts: [{ s: 'N (up)', u: 'N', ans: up }, { s: 'N′ (down)', u: 'N', ans: dn }],
-      sol: [`Upward: N − mg = ma → N = m(g + a) = ${m}×${fmt(G + a, 1)} = <b>${fmt(up)} N</b>`, `Downward: mg − N′ = ma → N′ = m(g − a) = <b>${fmt(dn)} N</b>`] }; },
-  () => { const m = rnd(5, 15), th = pick([30, 37, 45, 53]), t = m * G * S(th), N = m * G * C(th);
-    return { tag: 'Equilibrium on a slope', hint: 'a = 0, so the forces along the slope cancel and so do those perpendicular to it.',
-      text: `A ${m} kg block is held at rest on a frictionless ${th}° incline by a rope parallel to the slope. Find the tension T and the normal force N.`,
-      parts: [{ s: 'T', u: 'N', ans: t }, { s: 'N', u: 'N', ans: N }],
-      sol: [`Along slope: T = mg sinθ = <b>${fmt(t)} N</b>`, `Perpendicular: N = mg cosθ = <b>${fmt(N)} N</b>`] }; },
-  () => { const m = rnd(1, 5), th = pick([30, 37, 45, 53]), t = m * G / C(th), F = m * G * T(th);
-    return { tag: 'Equilibrium', hint: 'T has vertical and horizontal parts: T cosθ = mg, T sinθ = F.',
-      text: `A ${m} kg ball hangs from a string. A horizontal force F pulls it sideways until the string makes ${th}° with the vertical, and the ball is at rest. Find the tension T and the force F.`,
-      parts: [{ s: 'T', u: 'N', ans: t }, { s: 'F', u: 'N', ans: F }],
-      sol: [`Vertical: T cosθ = mg → T = ${fmt(m * G)}/${fmt(C(th), 3)} = <b>${fmt(t)} N</b>`, `Horizontal: F = T sinθ = mg tanθ = <b>${fmt(F)} N</b>`] }; },
-  () => { const M = rnd(10, 30), L = pick([4, 6, 8]), m = rnd(10, 40), d = rnd(1, L - 1), rr = (M * G * L / 2 + m * G * d) / L, rl = (M + m) * G - rr;
-    return { tag: 'Torque & equilibrium', hint: 'Στ = 0 about the left support removes R_L. The beam weight acts at its center.',
-      text: `A uniform ${M} kg beam, ${L} m long, rests on supports at both ends. A ${m} kg load sits ${d} m from the left end. Find the support forces R_L and R_R.`,
-      parts: [{ s: 'R_L', u: 'N', ans: rl }, { s: 'R_R', u: 'N', ans: rr }],
-      sol: [`Torques about left end: R_R·${L} = Mg·${L / 2} + mg·${d} → R_R = <b>${fmt(rr)} N</b>`, `ΣFy = 0: R_L = (M+m)g − R_R = <b>${fmt(rl)} N</b>`] }; },
-  () => { const m1 = rnd(20, 40), d1 = pick([1.5, 2, 2.5, 3]), d2 = pick([1, 1.5, 2]), m2 = m1 * d1 / d2, N = (m1 + m2) * G;
-    return { tag: 'Torque & equilibrium', hint: 'Balance torques about the pivot: m₁g·d₁ = m₂g·d₂. Pivot force supports both weights.',
-      text: `On a seesaw (massless plank), a ${m1} kg child sits ${d1} m from the pivot. Where must a second child sit, ${d2} m on the other side, to balance? Find that child's mass m₂ and the force N exerted by the pivot.`,
-      parts: [{ s: 'm₂', u: 'kg', ans: m2 }, { s: 'N', u: 'N', ans: N }],
-      sol: [`Στ = 0: m₁·${d1} = m₂·${d2} → m₂ = <b>${fmt(m2)} kg</b>`, `ΣFy = 0: N = (m₁+m₂)g = <b>${fmt(N)} N</b>`] }; },
-  () => { const [a, b, c] = pick([[3, 4, 5], [5, 12, 13], [8, 15, 17]]), k = rnd(1, 4), m = rnd(2, 10), fn = c * k, ac = fn / m;
-    return { tag: 'Net force', hint: 'Perpendicular forces combine with the Pythagorean theorem; then a = ΣF/m.',
-      text: `Two forces act on a ${m} kg object: ${a * k} N toward the east and ${b * k} N toward the north. Find the net force F<sub>net</sub> and the magnitude of the acceleration a.`,
-      parts: [{ s: 'F_net', u: 'N', ans: fn }, { s: 'a', u: 'm/s²', ans: ac }],
-      sol: [`F_net = √(${a * k}² + ${b * k}²) = <b>${fmt(fn)} N</b>`, `a = F_net/m = <b>${fmt(ac)} m/s²</b>`] }; },
+      sol: [`แนวดิ่ง: N + F sinθ = mg → N = ${m * G} − ${fmt(F * S(th))} = <b>${fmt(N)} N</b>`, `แนวราบ: F cosθ − μₖN = ma → a = (${fmt(F * C(th))} − ${fmt(mu * N)})/${m} = <b>${fmt(a)} m/s²</b>`] }; },
+  // 3 ผลักด้วยความเร็วคงที่
   () => { const m = rnd(10, 40), mu = pick([.2, .25, .3, .4]), N = m * G, F = mu * N;
-    return { tag: 'Dynamic equilibrium', hint: 'Constant velocity means a = 0, so the push equals kinetic friction.',
-      text: `A worker pushes a ${m} kg crate horizontally at constant velocity across a floor with μk = ${mu}. Find the normal force N and the pushing force F.`,
+    return { tag: 'ความเร็วคงที่ (สมดุล)', hint: 'ความเร็วคงที่แปลว่า a = 0 ดังนั้นแรงผลักเท่ากับแรงเสียดทานจลน์',
+      text: `คนผลักลังมวล ${m} kg ในแนวระดับให้เคลื่อนที่ด้วยความเร็วคงที่บนพื้นที่มีสัมประสิทธิ์ความเสียดทานจลน์ ${mu} จงหาแรงปฏิกิริยา N และแรงผลัก F`,
       parts: [{ s: 'N', u: 'N', ans: N }, { s: 'F', u: 'N', ans: F }],
-      sol: [`Vertical: N = mg = <b>${fmt(N)} N</b>`, `Horizontal (a = 0): F = μN = ${mu}×${fmt(N)} = <b>${fmt(F)} N</b>`] }; },
-  () => { const m1 = rnd(2, 8), m2 = rnd(1, 5), a = m2 * G / (m1 + m2), t = m1 * a;
-    return { tag: 'Pulley system', hint: 'Only the hanging mass has a gravity term along the motion.',
-      text: `A ${m1} kg block on a frictionless table is tied by a rope over a pulley to a ${m2} kg block hanging off the edge. Find the acceleration a and the tension T.`,
+      sol: [`แนวดิ่ง: N = mg = <b>${fmt(N)} N</b>`, `แนวราบ (a = 0): F = μₖN = ${mu} × ${fmt(N)} = <b>${fmt(F)} N</b>`] }; },
+  // 4 พื้นเอียงลื่น ดึงด้วยเชือก
+  () => { const m = rnd(5, 15), th = pick([30, 37, 53]), t = m * G * S(th), N = m * G * C(th);
+    return { tag: 'พื้นเอียง (สมดุล)', hint: 'วัตถุนิ่ง ΣF = 0 ทั้งแนวขนานและแนวตั้งฉากกับพื้นเอียง',
+      text: `วัตถุมวล ${m} kg วางบนพื้นเอียงลื่นที่เอียง ${th}° ถูกเชือกที่ขนานกับพื้นเอียงดึงไว้ให้นิ่ง จงหาแรงตึงเชือก T และแรงปฏิกิริยา N`,
+      parts: [{ s: 'T', u: 'N', ans: t }, { s: 'N', u: 'N', ans: N }],
+      sol: [`ขนานพื้นเอียง: T = mg sinθ = <b>${fmt(t)} N</b>`, `ตั้งฉากพื้นเอียง: N = mg cosθ = <b>${fmt(N)} N</b>`] }; },
+  // 5 พื้นเอียงมีความเสียดทาน ไถลลง
+  () => { const m = rnd(3, 10), th = pick([30, 37, 53]), mu = pick([.1, .2]), N = m * G * C(th), a = G * (S(th) - mu * C(th));
+    return { tag: 'พื้นเอียงมีความเสียดทาน', hint: 'N = mg cosθ จากนั้นเขียน ΣF ตามแนวพื้นเอียง: mg sinθ − μₖN = ma',
+      text: `วัตถุมวล ${m} kg ไถลลงตามพื้นเอียงที่เอียง ${th}° โดยมีสัมประสิทธิ์ความเสียดทานจลน์ ${mu} จงหาแรงปฏิกิริยา N และความเร่ง a ของวัตถุ`,
+      parts: [{ s: 'N', u: 'N', ans: N }, { s: 'a', u: 'm/s²', ans: a }],
+      sol: [`N = mg cosθ = <b>${fmt(N)} N</b>`, `mg sinθ − μₖN = ma → a = ${fmt(G * S(th))} − ${fmt(mu * G * C(th))} = <b>${fmt(a)} m/s²</b>`] }; },
+  // 6 ดึงขึ้นพื้นเอียงด้วยความเร็วคงที่
+  () => { const m = rnd(4, 12), th = pick([30, 37]), mu = pick([.1, .2, .25]), N = m * G * C(th), F = m * G * S(th) + mu * N;
+    return { tag: 'ดึงขึ้นพื้นเอียง', hint: 'ความเร็วคงที่ a = 0 แรงเสียดทานชี้ลงตามพื้นเอียง ดังนั้น F = mg sinθ + μₖN',
+      text: `ดึงวัตถุมวล ${m} kg ขึ้นตามพื้นเอียง ${th}° ด้วยแรงขนานพื้นเอียงให้เคลื่อนที่ด้วยความเร็วคงที่ สัมประสิทธิ์ความเสียดทานจลน์ ${mu} จงหา N และแรงดึง F`,
+      parts: [{ s: 'N', u: 'N', ans: N }, { s: 'F', u: 'N', ans: F }],
+      sol: [`N = mg cosθ = <b>${fmt(N)} N</b>`, `F = mg sinθ + μₖN = ${fmt(m * G * S(th))} + ${fmt(mu * N)} = <b>${fmt(F)} N</b>`] }; },
+  // 7 วัตถุสองก้อนผูกเชือก ถูกดึงบนพื้นลื่น
+  () => { const m1 = rnd(2, 8), m2 = rnd(2, 8), F = rnd(3, 8) * 5, a = F / (m1 + m2), t = m2 * a;
+    return { tag: 'วัตถุผูกเชือก', hint: 'มองทั้งสองก้อนเป็นระบบเดียวเพื่อหา a แล้วแยกพิจารณาก้อนที่ไม่ถูกดึงโดยตรงเพื่อหา T',
+      text: `วัตถุ m₁ = ${m1} kg และ m₂ = ${m2} kg ผูกกันด้วยเชือกเบาบนพื้นลื่น ออกแรงดึง m₁ ด้วยแรง F = ${F} N ในแนวระดับ โดย m₂ ถูกลากตามหลัง จงหาความเร่ง a และแรงตึงเชือก T`,
       parts: [{ s: 'a', u: 'm/s²', ans: a }, { s: 'T', u: 'N', ans: t }],
-      sol: [`Hanging: m₂g − T = m₂a · Table: T = m₁a`, `a = m₂g/(m₁+m₂) = <b>${fmt(a)} m/s²</b>`, `T = m₁a = <b>${fmt(t)} N</b>`] }; }
+      sol: [`ทั้งระบบ: F = (m₁ + m₂)a → a = ${F}/${m1 + m2} = <b>${fmt(a)} m/s²</b>`, `ก้อน m₂: T = m₂a = ${m2} × ${fmt(a)} = <b>${fmt(t)} N</b>`] }; },
+  // 8 รอก: โต๊ะลื่น + ห้อย
+  () => { const m1 = rnd(2, 8), m2 = rnd(1, 5), a = m2 * G / (m1 + m2), t = m1 * a;
+    return { tag: 'รอกและเชือก', hint: 'มีเพียงมวลที่ห้อยเท่านั้นที่มีน้ำหนักทำให้ระบบเคลื่อนที่ เขียน ΣF ของแต่ละก้อน',
+      text: `มวล ${m1} kg วางบนโต๊ะลื่น ผูกเชือกพาดรอกลื่นไปห้อยมวล ${m2} kg ที่ขอบโต๊ะ จงหาความเร่ง a ของระบบ และแรงตึงเชือก T`,
+      parts: [{ s: 'a', u: 'm/s²', ans: a }, { s: 'T', u: 'N', ans: t }],
+      sol: [`ก้อนห้อย: m₂g − T = m₂a , ก้อนบนโต๊ะ: T = m₁a`, `a = m₂g/(m₁ + m₂) = <b>${fmt(a)} m/s²</b>`, `T = m₁a = <b>${fmt(t)} N</b>`] }; },
+  // 9 ป้ายแขวนเชือกสองเส้น
+  () => { const m = rnd(10, 40), [a1, a2] = pick([[37, 53], [53, 37], [30, 60], [60, 30], [45, 45], [30, 30]]), W = m * G, t1 = W * C(a2) / S(a1 + a2), t2 = W * C(a1) / S(a1 + a2);
+    return { tag: 'สมดุลต่อการเลื่อนที่', hint: 'ที่ปมเชือก ΣFx = 0 และ ΣFy = 0 ได้สมการสองสมการ สองตัวไม่ทราบค่า',
+      text: `แขวนป้ายมวล ${m} kg ด้วยเชือกสองเส้น เชือกซ้ายทำมุม ${a1}° และเชือกขวาทำมุม ${a2}° กับแนวระดับ ป้ายอยู่นิ่ง จงหาแรงตึงเชือก T₁ (ซ้าย) และ T₂ (ขวา)`,
+      parts: [{ s: 'T₁', u: 'N', ans: t1 }, { s: 'T₂', u: 'N', ans: t2 }],
+      sol: [`แนวราบ: T₁ cos${a1}° = T₂ cos${a2}° , แนวดิ่ง: T₁ sin${a1}° + T₂ sin${a2}° = ${fmt(W, 0)}`, `T₁ = <b>${fmt(t1)} N</b>`, `T₂ = <b>${fmt(t2)} N</b>`] }; },
+  // 10 ลูกบอลแขวนถูกดึงด้านข้าง
+  () => { const m = rnd(1, 6), th = pick([37, 53, 45]), t = m * G / C(th), F = m * G * TAN(th);
+    return { tag: 'สมดุลต่อการเลื่อนที่', hint: 'แยก T เป็น T cosθ (ดิ่ง) และ T sinθ (ราบ) โดย θ วัดจากแนวดิ่ง',
+      text: `ลูกบอลมวล ${m} kg แขวนด้วยเชือก ถูกดึงด้วยแรง F ในแนวระดับ จนเชือกทำมุม ${th}° กับแนวดิ่งและลูกบอลนิ่ง จงหาแรงตึงเชือก T และแรง F`,
+      parts: [{ s: 'T', u: 'N', ans: t }, { s: 'F', u: 'N', ans: F }],
+      sol: [`แนวดิ่ง: T cosθ = mg → T = ${fmt(m * G)}/${fmt(C(th), 2)} = <b>${fmt(t)} N</b>`, `แนวราบ: F = T sinθ = mg tanθ = <b>${fmt(F)} N</b>`] }; },
+  // 11 ลิฟต์
+  () => { const m = rnd(4, 8) * 10, a = pick([1, 2, 2.5]), up = m * (G + a), dn = m * (G - a);
+    return { tag: 'กฎข้อที่ 2 ของนิวตัน', hint: 'เครื่องชั่งอ่านค่า N ให้เลือกทิศขึ้นเป็นบวก แล้วเขียน N − mg = ma',
+      text: `คนมวล ${m} kg ยืนบนเครื่องชั่งสปริงในลิฟต์ที่มีความเร่งขนาด ${a} m/s² จงหาค่าที่เครื่องชั่งอ่านได้ (เป็นนิวตัน) ขณะลิฟต์เร่งขึ้น (N) และขณะลิฟต์เร่งลง (N′)`,
+      parts: [{ s: 'N (ขึ้น)', u: 'N', ans: up }, { s: 'N′ (ลง)', u: 'N', ans: dn }],
+      sol: [`เร่งขึ้น: N − mg = ma → N = m(g + a) = ${m} × ${fmt(G + a, 1)} = <b>${fmt(up)} N</b>`, `เร่งลง: mg − N′ = ma → N′ = m(g − a) = <b>${fmt(dn)} N</b>`] }; },
+  // 12 คานวางบนฐานรองสองปลาย
+  () => { const M = rnd(2, 6) * 5, L = pick([4, 6, 8]), m = rnd(2, 8) * 5, d = rnd(1, L - 1), rr = (M * G * L / 2 + m * G * d) / L, rl = (M + m) * G - rr;
+    return { tag: 'สมดุลต่อการหมุน', hint: 'หาโมเมนต์รอบปลายซ้าย จะกำจัด R_L ได้ น้ำหนักคานสม่ำเสมอกระทำที่กึ่งกลางคาน',
+      text: `คานสม่ำเสมอมวล ${M} kg ยาว ${L} m วางบนฐานรองที่ปลายทั้งสอง มีมวล ${m} kg วางห่างจากปลายซ้าย ${d} m จงหาแรงที่ฐานรองซ้าย R_L และขวา R_R กระทำต่อคาน`,
+      parts: [{ s: 'R_L', u: 'N', ans: rl }, { s: 'R_R', u: 'N', ans: rr }],
+      sol: [`โมเมนต์รอบปลายซ้าย: R_R × ${L} = Mg × ${L / 2} + mg × ${d} → R_R = <b>${fmt(rr)} N</b>`, `ΣFy = 0: R_L = (M + m)g − R_R = <b>${fmt(rl)} N</b>`] }; },
+  // 13 กระดานหก
+  () => { const m1 = pick([20, 30, 40]), d1 = pick([1, 1.5, 2, 2.5, 3]), d2 = pick([1, 1.5, 2]), m2 = m1 * d1 / d2, N = (m1 + m2) * G;
+    return { tag: 'สมดุลต่อการหมุน', hint: 'โมเมนต์ตามเข็ม = โมเมนต์ทวนเข็มรอบจุดหมุน และแรงที่จุดหมุนต้องรับน้ำหนักทั้งสองคน',
+      text: `กระดานหกน้ำหนักเบา เด็กมวล ${m1} kg นั่งห่างจุดหมุน ${d1} m ต้องให้เด็กอีกคนนั่งห่างจุดหมุน ${d2} m อีกฝั่งหนึ่งจึงจะสมดุล จงหามวล m₂ ของเด็กคนนั้น และแรง N ที่จุดหมุนกระทำต่อกระดาน`,
+      parts: [{ s: 'm₂', u: 'kg', ans: m2 }, { s: 'N', u: 'N', ans: N }],
+      sol: [`Στ = 0: m₁g × ${d1} = m₂g × ${d2} → m₂ = <b>${fmt(m2)} kg</b>`, `ΣFy = 0: N = (m₁ + m₂)g = <b>${fmt(N)} N</b>`] }; }
 ];
 let qs = [];
 function newTest() {
@@ -549,8 +622,8 @@ function newTest() {
     el.innerHTML = `<div class="tag">${q.tag}</div>
       <p><span class="num">${n + 1}.</span>${q.text}</p>
       <div class="answers">${q.parts.map((p, i) => `<label>${p.s} = <input type="number" step="any" inputmode="decimal" data-i="${i}" aria-label="${p.s}"> ${p.u}</label>`).join('')}</div>
-      <details><summary class="hint">Hint</summary><p class="hint">${q.hint}</p></details>
-      <div class="sol" hidden>${q.sol.map(s => `<p>${s}</p>`).join('')}</div>`;
+      <details><summary class="hint">คำใบ้</summary><p class="hint">${q.hint}</p></details>
+      <div class="sol" hidden><p><b>วิธีทำ</b></p>${q.sol.map(s => `<p>${s}</p>`).join('')}</div>`;
     q.el = el; $('#qlist').append(el);
   });
   $('#score').textContent = '';
@@ -567,15 +640,16 @@ function checkAll() {
     $('.sol', q.el).hidden = false;
   });
   const pct = Math.round(100 * ok / tot);
-  let best = pct; try { best = Math.max(pct, +localStorage.getItem('physlab-best') || 0); localStorage.setItem('physlab-best', best); } catch (e) {}
-  const msg = pct >= 85 ? '🏆 Excellent!' : pct >= 60 ? '👍 Good, review the missed ones.' : '📚 Revisit the Learn tab and simulations, then retry.';
-  $('#score').textContent = `Score: ${ok}/${tot} (${pct}%) · Best: ${best}% · ${msg}`;
+  let best = pct; try { best = Math.max(pct, +localStorage.getItem('physlab-th-best') || 0); localStorage.setItem('physlab-th-best', best); } catch (e) {}
+  const msg = pct >= 85 ? '🏆 ยอดเยี่ยม!' : pct >= 60 ? '👍 ดี ลองทบทวนข้อที่พลาด' : '📚 กลับไปลองเล่นการจำลองแล้วทำใหม่อีกครั้ง';
+  $('#score').textContent = `คะแนน ${ok}/${tot} (${pct}%) · ดีที่สุด ${best}% · ${msg}`;
 }
 $('#btn-check').onclick = checkAll;
 $('#btn-new').onclick = newTest;
 newTest();
 
-const h = location.hash.slice(1); if (['learn', 'sims', 'pretest'].includes(h)) showTab(h);
+if (window.__PHYS_TEST__) window.__PHYS_TEST__.api = { sims, gens, G };
+const h = location.hash.slice(1); if (['sims', 'pretest'].includes(h)) showTab(h);
 })();
 </script>
 </body>
