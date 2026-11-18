@@ -1,22 +1,20 @@
-# PhysicsLab: Forces, Laws of Motion & Mechanical Equilibrium
+# ห้องทดลองฟิสิกส์ ม.4: แรงและกฎการเคลื่อนที่ · สมดุลกล
 
-An interactive, dependency-free physics website, ready for GitHub Pages.
+เว็บจำลองฟิสิกส์ระดับ ม.4 (สสวท.) ไฟล์เดียว `index.html` ไม่ต้องติดตั้งอะไร ใช้ g = 10 m/s²
 
-## What's inside
-- **Learn**: Newton's laws, friction, inclines, equilibrium (ΣF = 0, Στ = 0) and a problem-solving recipe.
-- **Simulations** (canvas, live free-body diagrams):
-  1. Newton's 2nd Law with static/kinetic friction
-  2. Inclined plane (components, sliding threshold tanθ > μ)
-  3. Hanging sign on two cables (find T₁, T₂)
-  4. Seesaw / torque balance (rotational equilibrium)
-- **Pre-test**: 10 randomized problems per attempt ("Find F, N, T, a…"), auto-checked within 2%, with step-by-step solutions and a saved best score.
+## มีอะไรบ้าง
+- **จำลองการทดลอง 6 แบบ:** แรงลัพธ์ · ดึงวัตถุบนพื้น (ทำมุมได้) · พื้นเอียง (ดึงขึ้น/ไถลลง) · รอก/เชือกผูก · เชือกแขวนสองเส้น (สมดุล) · คาน/โมเมนต์
+  - ทุกช่องค่าพิมพ์ตัวเลขเองได้ หรือพิมพ์สมการ เช่น `2*g`, `37`
+- **ห้องสมการ:** ตั้งตัวแปรและเขียนสมการเอง เช่น `N = m*g - F*sin(theta)` หรือแก้สมการหาตัวไม่ทราบค่า `หา a : F*cos(theta) - mu*N = m*a`
+  - ตัวแปรที่ตั้งในห้องสมการ นำไปใส่ในช่องค่าของการจำลองได้
+  - ใช้ได้: `+ - * / ^ ( )`, `sin cos tan asin acos atan` (องศา), `sqrt abs min max`, `pi`
+- **แบบทดสอบก่อนเรียน:** สุ่ม 10 ข้อจาก 13 รูปแบบ (หา F, N, T, a, R) ตรวจอัตโนมัติ (คลาดเคลื่อนได้ 2%) พร้อมวิธีทำ
 
-## Deploy on GitHub Pages
-1. Create a repository and add `index.html` and `README.md` to the root of the `main` branch.
-2. Go to **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`, then Save.
-4. After a minute your site is live at `https://<username>.github.io/<repo>/`.
+## เผยแพร่บน GitHub Pages
+1. สร้าง repository แล้วอัปโหลด `index.html` กับ `README.md` ไว้ที่โฟลเดอร์หลักของ branch `main`
+2. ไปที่ Settings → Pages → Deploy from a branch → `main` / `(root)` → Save
+3. รอสักครู่ เว็บจะอยู่ที่ `https://<ชื่อผู้ใช้>.github.io/<ชื่อ repo>/`
 
-## Customize
-- Add a new pre-test problem: append a generator to the `gens` array in `index.html` (return `text`, `parts` with answers, `sol`, `hint`).
-- Add a simulation: create an object like `newton` (with `controls`, `calc`, `readout`, `draw`) and add it to the `sims` array.
+## ปรับแต่ง
+- เพิ่มโจทย์: เพิ่มฟังก์ชันใน array `gens` (ส่งกลับ `text`, `parts`, `sol`, `hint`)
+- เพิ่มการจำลอง: สร้างออบเจกต์แบบเดียวกับ `pull` แล้วใส่ใน array `sims`
